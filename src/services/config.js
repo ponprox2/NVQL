@@ -25,3 +25,7 @@ export const API_TERITORIES_MANAGED = `${BASE_URL}/api/territoriesManagement`;
 export const API_SHOP_NAME = `${BASE_URL}/api/shopNames`;
 
 export const API_GET_PACKET_STATUS = `${BASE_URL}/api/packageStatus`;
+
+export const API_GET_WAREHOUSE_REPORT = `${BASE_URL}/api/warehouseReport`;
+
+export const API_GET_MANAGED_WAREHOUSE = `${BASE_URL}/api/managedWarehouses`;

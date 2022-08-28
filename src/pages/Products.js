@@ -3,6 +3,7 @@ import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 // material
 import {
   Card,
@@ -33,17 +34,17 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
 import DateRangePicker from './chooseTimeRangePicker';
+import { getWareHouseReportAPI, getManagedWarehouseAPI } from '../services/index';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'stt', label: 'STT', alignRight: false },
-  { id: 'shippingID', label: 'shippingID', alignRight: false },
-  { id: 'packageName', label: 'packageName', alignRight: false },
-  { id: 'quantity', label: 'quantity', alignRight: false },
-  { id: 'mass', label: 'mass (Kg)', alignRight: false },
-  { id: 'unitPrice', label: 'unitPrice (VND)', alignRight: false },
-  { id: 'deliveryAddress', label: 'deliveryAddress', alignRight: false },
+  { id: 'time', label: 'time', alignRight: false },
+  { id: 'orderQuantityFromShop', label: 'orderQuantityFromShop', alignRight: false },
+  { id: 'orderQuantityDeliverInTime', label: 'orderQuantityDeliverInTime', alignRight: false },
+  { id: 'orderQuantityDeliverDelayTime', label: 'orderQuantityDeliverDelayTime', alignRight: false },
+  { id: 'orderQuantityCancelled', label: 'orderQuantityCancelled', alignRight: false },
+  { id: 'uorderQuantityOnceFailednitPrice', label: 'orderQuantityOnceFailed)', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -93,10 +94,11 @@ export default function User() {
   const [openRangePicker, setOpenRangePicker] = useState(false);
   const [timeChoose, setTimeChoose] = useState('');
   const [endTimeChoose, setEndTimeChoose] = useState('');
+  const [shopnameChoose, setShopnameChoose] = useState('');
+  const [shopname1, setShopname1] = useState([]);
+  const [buttonChoose, setButtonChoose] = useState('');
 
-  const [listProduct, setListProduct] = useState([
-    { id: 1, name: 'pon', price: 11111, discount: 15, status: true, address: '97 man thien' },
-  ]);
+  const [listProduct, setListProduct] = useState([]);
 
   // useEffect(() => {
   //   async function loadListProduct() {
@@ -105,20 +107,44 @@ export default function User() {
   //   }
   //   loadListProduct();
   // }, []);
-  const handleChangeStatus = (id) => {
-    const temp = listProduct.filter((e) => e.id === id);
-    const tempArr = listProduct.filter((e) => e.id !== id);
-    let temp1 = [];
-    if (temp[0].status === true) {
-      temp[0].status = false;
-      temp1 = temp;
-    } else {
-      temp[0].status = true;
-      temp1 = temp;
+
+  useEffect(() => {
+    let timeEnd1 = '20';
+    const timeEnd = endTimeChoose?.split('/');
+    for (let i = timeEnd?.length - 1; i >= 0; i -= 1) {
+      timeEnd1 += timeEnd[i];
     }
-    const temp2 = [...temp1, ...tempArr];
-    temp2.sort((a, b) => a.id - b.id);
-    setListProduct(temp2);
+
+    const body = {
+      warehouseID: shopnameChoose,
+      fromDate: moment(`${timeChoose}`).format('YYYYDDMM'),
+      toDate: timeEnd1,
+      monthlyReport: buttonChoose,
+    };
+    getWareHouseReport(body);
+  }, [endTimeChoose, timeChoose, shopnameChoose, buttonChoose]);
+  useEffect(() => {
+    getManagedWarehouse(234);
+  }, []);
+
+  const getWareHouseReport = async (body) => {
+    try {
+      const res = await getWareHouseReportAPI(body);
+      if (res?.status === 200) {
+        setListProduct(res?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getManagedWarehouse = async (id) => {
+    try {
+      const res = await getManagedWarehouseAPI(id);
+      console.log(res);
+      setShopname1(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRequestSort = (event, property) => {
@@ -134,6 +160,11 @@ export default function User() {
       return;
     }
     setSelected([]);
+  };
+
+  const renderAddress = (id) => {
+    const res = shopname1?.filter((e) => e?.warehouseID === id);
+    return res?.[0]?.address;
   };
 
   const handleClick = (event, name) => {
@@ -189,26 +220,23 @@ export default function User() {
         <Box style={{ marginBottom: '30px' }}>
           <Box style={{ display: 'flex' }}>
             <Box>Nhà kho: </Box>
-            <Box style={{ marginLeft: '150px' }}>97 man thien </Box>
-          </Box>
-          <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
-            <Box>Địa chỉ kho: </Box>
             <FormControl style={{ marginTop: '10px', marginLeft: '110px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 style={{ height: '30px' }}
-                // value={regionsChoose}
-                // onChange={(e) => handleChangeRegion(e)}
+                value={shopnameChoose}
+                onChange={(e) => setShopnameChoose(e?.target?.value)}
               >
-                {/* {regions?.map((e) => (
-                  <MenuItem value={e?.regionID}>{e?.adminDivision2}</MenuItem>
-                ))} */}
-                {/* <MenuItem value={0}>Chưa giao</MenuItem>
-                <MenuItem value={1}>Giao thành công</MenuItem>
-                <MenuItem value={2}>Giao thất bại</MenuItem> */}
+                {shopname1?.map((e) => (
+                  <MenuItem value={e?.warehouseID}>{e?.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
+          </Box>
+          <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
+            <Box>Quản Lý Kho: </Box>
+            <Box style={{ marginLeft: '30px' }}>{renderAddress(shopnameChoose)}</Box>
           </Box>
 
           <Box onClick={() => setOpenRangePicker(true)}>
@@ -224,6 +252,15 @@ export default function User() {
             setEndTimeChoose={setEndTimeChoose}
           />
         </Box>
+        <Box style={{ display: 'flex', width: '400px', justifyContent: 'space-between', marginBottom: '30px' }}>
+          <Button variant="contained" onClick={() => setButtonChoose(0)}>
+            Thống Kê Theo Ngày
+          </Button>
+          <Button variant="contained" onClick={() => setButtonChoose(1)}>
+            Thống Kê Theo Tháng
+          </Button>
+        </Box>
+
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
@@ -236,50 +273,46 @@ export default function User() {
                   headLabel={TABLE_HEAD}
                   rowCount={listProduct.length}
                   numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
 
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const id = row.id;
-                    const name = row.name;
-                    const price = row.price;
-                    const discount = row.discount;
-                    const status = row.status;
-                    const address = row.address;
-
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                    const {
+                      orderQuantityOnceFailed,
+                      orderQuantityCancelled,
+                      orderQuantityDeliverDelayTime,
+                      orderQuantityDeliverOnTime,
+                      orderQuantityFromShop,
+                      time,
+                    } = row;
+                    const isItemSelected = selected.indexOf(time) !== -1;
 
                     return (
                       <TableRow
                         hover
-                        key={id}
+                        key={time}
                         tabIndex={-1}
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                          {/* <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} /> */}
                         </TableCell>
 
-                        <TableCell align="left" onClick={() => navigate(`/dashboard/updateProduct?id=${id}`)}>
-                          {name}
-                        </TableCell>
-                        <TableCell align="left">{id}</TableCell>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{price}</TableCell>
-                        <TableCell align="left">{discount}</TableCell>
-                        <TableCell align="left" onClick={() => handleChangeStatus(id)}>
-                          {status ? 'xuat' : 'nhap'}
-                        </TableCell>
-                        <TableCell align="left">{address}</TableCell>
-                        {/* <Button>123</Button> */}
-
-                        {/* <TableCell align="right">
-                          <UserMoreMenu id={id} />
-                        </TableCell> */}
+                        <TableCell align="center">{time}</TableCell>
+                        <TableCell align="center">{orderQuantityFromShop}</TableCell>
+                        <TableCell align="center">{orderQuantityDeliverOnTime}</TableCell>
+                        <TableCell align="center">{orderQuantityDeliverDelayTime}</TableCell>
+                        <TableCell align="center">{orderQuantityCancelled}</TableCell>
+                        <TableCell align="center">{orderQuantityOnceFailed}</TableCell>
+                        {/* orderQuantityOnceFailed,
+                    orderQuantityCancelled,
+                    orderQuantityDeliverDelayTime,
+                    orderQuantityDeliverInTime,
+                    orderQuantityFromShop,
+                    time */}
                       </TableRow>
                     );
                   })}

@@ -12,12 +12,34 @@ import {
   API_SHOP_ORDER_MANAGED,
   API_TERITORIES_MANAGED,
   API_SHOP_NAME,
-  API_GET_PACKET_STATUS
+  API_GET_PACKET_STATUS,
+  API_GET_WAREHOUSE_REPORT,
+  API_GET_MANAGED_WAREHOUSE
 } from './config';
 
 export const getWorkingTerritory = async (id) => {
   try {
     const response = await axios.get(`${API_GET_WORKING_TERRITORY}?staffID=${id}`);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getManagedWarehouseAPI = async (id) => {
+  try {
+    const response = await axios.get(`${API_GET_MANAGED_WAREHOUSE}?managerID=${id}`);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getWareHouseReportAPI = async (body) => {
+  try {
+    const response = await axios.get(
+      `${API_GET_WAREHOUSE_REPORT}?warehouseID=${body?.warehouseID}&fromDate=${body?.fromDate}&toDate=${body?.toDate}&monthlyReport=${body?.monthlyReport}`
+    );
     return response;
   } catch (error) {
     return error?.response?.data || error;
@@ -106,7 +128,9 @@ export const loginAPI = async (body) => {
 
 export const getShopOrderManagedAPI = async (body) => {
   try {
-    const response = await axios.get(`${API_SHOP_ORDER_MANAGED}?managerID=${body?.managerID}&shopID=${body.shopId}&territoryID=${body?.territoryID}&regionID=${body?.regionID}&statusID=${body.statusID}`);
+    const response = await axios.get(
+      `${API_SHOP_ORDER_MANAGED}?managerID=${body?.managerID}&shopID=${body.shopId}&territoryID=${body?.territoryID}&regionID=${body?.regionID}&statusID=${body.statusID}`
+    );
     return response;
   } catch (error) {
     return error?.response?.data || error;
