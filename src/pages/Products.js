@@ -39,12 +39,12 @@ import { getWareHouseReportAPI, getManagedWarehouseAPI } from '../services/index
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'time', label: 'time', alignRight: false },
-  { id: 'orderQuantityFromShop', label: 'orderQuantityFromShop', alignRight: false },
-  { id: 'orderQuantityDeliverInTime', label: 'orderQuantityDeliverInTime', alignRight: false },
-  { id: 'orderQuantityDeliverDelayTime', label: 'orderQuantityDeliverDelayTime', alignRight: false },
-  { id: 'orderQuantityCancelled', label: 'orderQuantityCancelled', alignRight: false },
-  { id: 'uorderQuantityOnceFailednitPrice', label: 'orderQuantityOnceFailed)', alignRight: false },
+  { id: 'time', label: 'Thời gian', alignRight: false },
+  { id: 'orderQuantityFromShop', label: 'Số đơn hàng nhận từ cửa hàng', alignRight: false },
+  { id: 'orderQuantityDeliverInTime', label: 'Số đơn hàng giao thành công đúng hạn', alignRight: false },
+  { id: 'orderQuantityDeliverDelayTime', label: 'Số đơn hàng giao thành công trễ hạn', alignRight: false },
+  { id: 'orderQuantityCancelled', label: 'Số đơn hàng bị hủy', alignRight: false },
+  { id: 'orderQuantityOnceFailed', label: 'Số đơn hàng có lần giao thất bại', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -206,21 +206,21 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Product
+          Thống Kê Kho
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             component={RouterLink}
             to="/dashboard/addProduct"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
             New product
-          </Button>
+          </Button> */}
         </Stack>
         <Box style={{ marginBottom: '30px' }}>
           <Box style={{ display: 'flex' }}>
-            <Box>Nhà kho: </Box>
-            <FormControl style={{ marginTop: '10px', marginLeft: '110px' }}>
+            <Box>Nhà kho</Box>
+            <FormControl style={{ marginTop: '-5px', marginLeft: '125px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -235,13 +235,22 @@ export default function User() {
             </FormControl>
           </Box>
           <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
-            <Box>Quản Lý Kho: </Box>
-            <Box style={{ marginLeft: '30px' }}>{renderAddress(shopnameChoose)}</Box>
+            <Box>Địa chỉ kho</Box>
+            <Box style={{ marginLeft: '105px' }}>{renderAddress(shopnameChoose)}</Box>
           </Box>
 
-          <Box onClick={() => setOpenRangePicker(true)}>
-            Thời gian thống kê: {timeChoose} - {endTimeChoose}{' '}
+          <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
+            <Box >Thời gian thống kê</Box>
+             <Box onClick={() => setOpenRangePicker(true)}
+             style={{ marginLeft: '50px' }}>
+                {timeChoose}  -  {endTimeChoose}{' '}
+            </Box>
           </Box>
+
+
+          {/* <Box onClick={() => setOpenRangePicker(true)}>
+            Thời gian thống kê {timeChoose} - {endTimeChoose}{' '}
+          </Box> */}
 
           <DateRangePicker
             openTime={openRangePicker}

@@ -49,14 +49,14 @@ import {
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'shopOrderID', label: 'shopOrderID', alignRight: false },
-  { id: 'shopName', label: 'shopName', alignRight: false },
-  { id: 'shopkeeperName', label: 'shopkeeperName', alignRight: false },
-  { id: 'shopAddress', label: 'shopAddress', alignRight: false },
-  { id: 'shopPhone', label: 'shopPhone', alignRight: false },
-  { id: 'registerDate', label: 'registerDate', alignRight: false },
-  { id: 'deliveryAddress ', label: 'deliveryAddress ', alignRight: false },
-  { id: 'status', label: 'status', alignRight: false },
+  { id: 'shopOrderID', label: 'Mã đơn hàng', alignRight: false },
+  { id: 'shopName', label: 'Tên cửa hàng', alignRight: false },
+  { id: 'shopkeeperName', label: 'Chủ cửa hàng', alignRight: false },
+  { id: 'shopAddress', label: 'Địa chỉ cửa hàng', alignRight: false },
+  { id: 'shopPhone', label: 'SĐT cửa hàng', alignRight: false },
+  { id: 'registerDate', label: 'Ngày đăng ký', alignRight: false },
+  { id: 'deliveryAddress ', label: 'Địa chỉ giao ', alignRight: false },
+  { id: 'status', label: 'Trạng thái đơn hàng', alignRight: false },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -245,7 +245,6 @@ export default function User() {
 
   const renderStatus = (status) => {
     const res = packetStatus?.filter((e) => e?.id === status * 1);
-
     return res?.[0]?.description;
   };
 
@@ -260,7 +259,7 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Quản Lý Danh Sách Đơn Hàng
+          Quản Lý Danh Sách Đơn Hàng
           </Typography>
           {/* <Button
             variant="contained"
@@ -274,8 +273,8 @@ export default function User() {
         </Stack>
         <Box style={{ marginBottom: '30px' }}>
           <Box style={{ display: 'flex' }}>
-            <Box>Cửa hàng: </Box>
-            <FormControl style={{ marginTop: '10px', marginLeft: '110px' }}>
+            <Box>Cửa hàng</Box>
+            <FormControl style={{ marginTop: '-5px', marginLeft: '110px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -290,8 +289,8 @@ export default function User() {
             </FormControl>
           </Box>
           <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
-            <Box>Khu vực giao hàng: </Box>
-            <FormControl style={{ marginTop: '10px', marginLeft: '110px' }}>
+            <Box style={{ marginTop: '10px'}}>Khu vực giao hàng</Box>
+            <FormControl style={{ marginTop: '10px', marginLeft: '45px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -307,7 +306,8 @@ export default function User() {
                 ))}
               </Select>
             </FormControl>
-            <FormControl style={{ marginTop: '10px', marginLeft: '110px' }}>
+            <Box style={{ marginTop: '10px', marginLeft: '40px' }}>Phường/xã giao hàng</Box>
+            <FormControl style={{ marginTop: '10px', marginLeft: '35px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -322,8 +322,8 @@ export default function User() {
             </FormControl>
           </Box>
           <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
-            <Box>Trạng thái xác nhận: </Box>
-            <FormControl style={{ marginTop: '10px', marginLeft: '50px' }}>
+            <Box style={{ marginTop: '10px'}}>Trạng thái đơn hàng</Box>
+            <FormControl style={{ marginTop: '10px', marginLeft: '32px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
