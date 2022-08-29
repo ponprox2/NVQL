@@ -14,12 +14,12 @@ const navConfig = [
   {
     title: 'Quản Lý Danh Sách Đơn Hàng',
     path: '/dashboard/user',
-   // icon: getIcon('eva:people-fill'),
+    // icon: getIcon('eva:people-fill'),
   },
   {
     title: 'Thống Kê Kho',
     path: '/dashboard/products',
-   // icon: getIcon('eva:shopping-bag-fill'),
+    // icon: getIcon('eva:shopping-bag-fill'),
   },
   // {
   //   title: 'Order',
@@ -32,9 +32,14 @@ const navConfig = [
   //   icon: getIcon('eva:file-text-fill'),
   // },
   {
+    title: 'Cập Nhật Nhà Kho Quản Lý',
+    path: '/dashboard/updateWareHose',
+    //  icon: getIcon('eva:file-text-fill'),
+  },
+  {
     title: 'logout',
-    path: '/logout',
-   // icon: getIcon('eva:lock-fill'),
+    path: '/login',
+    // icon: getIcon('eva:lock-fill'),
   },
   // {
   //   title: 'register',

@@ -14,7 +14,13 @@ import {
   API_SHOP_NAME,
   API_GET_PACKET_STATUS,
   API_GET_WAREHOUSE_REPORT,
-  API_GET_MANAGED_WAREHOUSE
+  API_GET_MANAGED_WAREHOUSE,
+  API_REGISTER,
+  API_GET_TERRITORY,
+  API_GET_MANGAGED_WAREHOUSES,
+  API_UPDATE_UN_MANGAGED_WAREHOUSES,
+  API_GET_UN_MANGAGED_WAREHOUSES,
+  API_UPDATE_MANGAGED_WAREHOUSE,
 } from './config';
 
 export const getWorkingTerritory = async (id) => {
@@ -157,6 +163,58 @@ export const getShopNameAPI = async () => {
 export const getPacketStatusAPI = async () => {
   try {
     const response = await axios.get(`${API_GET_PACKET_STATUS}`);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const registerAPI = async (body) => {
+  try {
+    const response = await axios.post(API_REGISTER, body);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getUnMangagedWarehouseAPI = async () => {
+  try {
+    const response = await axios.get(API_GET_UN_MANGAGED_WAREHOUSES);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+export const getMangagedWarehouseAPI = async (id) => {
+  try {
+    const response = await axios.get(`${API_GET_MANGAGED_WAREHOUSES}?managerID=${id}`);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+export const UpdateMangagedWarehouseAPI = async (body) => {
+  try {
+    const response = await axios.post(API_UPDATE_MANGAGED_WAREHOUSE, body);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const updateUnMangagedWarehouseAPI = async (body) => {
+  try {
+    const response = await axios.post(API_UPDATE_UN_MANGAGED_WAREHOUSES, body);
+    return response;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const getTerritoryAPI = async () => {
+  try {
+    const response = await axios.get(API_GET_TERRITORY);
     return response;
   } catch (error) {
     return error?.response?.data || error;

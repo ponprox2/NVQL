@@ -62,7 +62,6 @@ export default function LoginForm() {
           <TextField
             fullWidth
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -73,8 +72,6 @@ export default function LoginForm() {
                 </InputAdornment>
               ),
             }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
           />
         </Stack>
 

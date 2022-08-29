@@ -29,3 +29,14 @@ export const API_GET_PACKET_STATUS = `${BASE_URL}/api/packageStatus`;
 export const API_GET_WAREHOUSE_REPORT = `${BASE_URL}/api/warehouseReport`;
 
 export const API_GET_MANAGED_WAREHOUSE = `${BASE_URL}/api/managedWarehouses`;
+
+export const API_REGISTER = `${BASE_URL}/api/register`;
+
+
+export const API_GET_TERRITORY = `${BASE_URL}/api/territories`;
+
+export const API_GET_MANGAGED_WAREHOUSES = `${BASE_URL}/api/managedWarehouses`;
+export const API_UPDATE_MANGAGED_WAREHOUSE = `${BASE_URL}/api/managedWarehouse`;
+
+export const API_UPDATE_UN_MANGAGED_WAREHOUSES = `${BASE_URL}/api/unmanagedWarehouses`;
+export const API_GET_UN_MANGAGED_WAREHOUSES = `${BASE_URL}/api/unmanagedWarehouses`;

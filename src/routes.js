@@ -13,7 +13,10 @@ import DashboardApp from './pages/DashboardApp';
 import AddProduct from './pages/addProduct';
 import DetailOrder from './pages/detailOrder';
 import UpdProduct from './pages/updateProduct';
-
+import UpdateWareHose from './pages/UpdateWareHose';
+import Territory from './pages/Territory';
+import Regions from './pages/Regions';
+import AddWarehouse from './pages/AddWarehouse';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -32,6 +35,10 @@ export default function Router() {
         { path: 'updateProduct/', element: <UpdProduct /> },
         { path: 'orderDetail/', element: <DetailOrder /> },
         { path: 'orderHistory/', element: <DetailOrder /> },
+        { path: 'updateWareHose/', element: <UpdateWareHose /> },
+        { path: 'territory/', element: <Territory /> },
+        { path: 'regions/', element: <Regions /> },
+        { path: 'addWarehouse/', element: <AddWarehouse /> },
       ],
     },
     {
@@ -42,9 +49,9 @@ export default function Router() {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
-        { path: '*', element: <Navigate to="/404" /> },
+        // { path: '*', element: <Navigate to="/404" /> },
       ],
     },
-    { path: '*', element: <Navigate to="/404" replace /> },
+    // { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
