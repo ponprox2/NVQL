@@ -99,6 +99,7 @@ export default function User() {
   const [buttonChoose, setButtonChoose] = useState('');
 
   const [listProduct, setListProduct] = useState([]);
+  const staffId = localStorage.getItem('staffID')
 
   // useEffect(() => {
   //   async function loadListProduct() {
@@ -114,17 +115,22 @@ export default function User() {
     for (let i = timeEnd?.length - 1; i >= 0; i -= 1) {
       timeEnd1 += timeEnd[i];
     }
+    let timeEnd2 = '20';
+    const timeEnd3 = timeChoose?.split('/');
+    for (let i = timeEnd3?.length - 1; i >= 0; i -= 1) {
+      timeEnd2 += timeEnd3[i];
+    }
 
     const body = {
       warehouseID: shopnameChoose,
-      fromDate: moment(`${timeChoose}`).format('YYYYDDMM'),
+      fromDate: timeEnd2,
       toDate: timeEnd1,
       monthlyReport: buttonChoose,
     };
     getWareHouseReport(body);
   }, [endTimeChoose, timeChoose, shopnameChoose, buttonChoose]);
   useEffect(() => {
-    getManagedWarehouse(234);
+    getManagedWarehouse(staffId);
   }, []);
 
   const getWareHouseReport = async (body) => {
@@ -271,8 +277,6 @@ export default function User() {
         </Box>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>

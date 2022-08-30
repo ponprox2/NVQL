@@ -124,12 +124,8 @@ export const getShopOrderHistoryAPI = async (shopOrderID) => {
 };
 
 export const loginAPI = async (body) => {
-  try {
     const response = await axios.post(API_LOGIN, body);
     return response;
-  } catch (error) {
-    return error?.response?.data || error;
-  }
 };
 
 export const getShopOrderManagedAPI = async (body) => {
@@ -170,12 +166,8 @@ export const getPacketStatusAPI = async () => {
 };
 
 export const registerAPI = async (body) => {
-  try {
     const response = await axios.post(API_REGISTER, body);
     return response;
-  } catch (error) {
-    return error?.response?.data || error;
-  }
 };
 
 export const getUnMangagedWarehouseAPI = async () => {
@@ -195,21 +187,13 @@ export const getMangagedWarehouseAPI = async (id) => {
   }
 };
 export const UpdateMangagedWarehouseAPI = async (body) => {
-  try {
     const response = await axios.post(API_UPDATE_MANGAGED_WAREHOUSE, body);
     return response;
-  } catch (error) {
-    return error?.response?.data || error;
-  }
 };
 
 export const updateUnMangagedWarehouseAPI = async (body) => {
-  try {
     const response = await axios.post(API_UPDATE_UN_MANGAGED_WAREHOUSES, body);
     return response;
-  } catch (error) {
-    return error?.response?.data || error;
-  }
 };
 
 export const getTerritoryAPI = async () => {

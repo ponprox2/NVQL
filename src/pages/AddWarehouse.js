@@ -38,9 +38,9 @@ import { getUnMangagedWarehouseAPI, UpdateMangagedWarehouseAPI } from '../servic
 
 const TABLE_HEAD = [
   { id: 'territoryID  ', label: 'Mã nhà kho', alignRight: false },
-  { id: 'name   ', label: 'tên nhà kho', alignRight: false },
-  { id: 'description  ', label: 'địa chỉ', alignRight: false },
-  { id: 'address ', label: 'Chọn', alignRight: false },
+  { id: 'name   ', label: 'Tên nhà kho', alignRight: false },
+  { id: 'description  ', label: 'Địa chỉ kho', alignRight: false },
+  { id: 'address ', label: 'Thêm', alignRight: false },
 ];
 // const { shopOrderID, shopName, shopkeeperName, shopAddress, shopPhone, registerDate } = row;
 
@@ -102,6 +102,7 @@ export default function Territory() {
   const [regionsChoose, setRegionsChoose] = useState(0);
   const [open, setOpen] = useState(false);
   const [itemProp, setItemProp] = useState({});
+  const [error1, setError1] = useState('');
 
   async function getUnMangagedWarehouse() {
     const res = await getUnMangagedWarehouseAPI();
@@ -179,10 +180,16 @@ export default function Territory() {
       managerID: staffID,
     };
 
-    const res = await UpdateMangagedWarehouseAPI(body);
-    if (res?.status === 200) {
-      getUnMangagedWarehouse();
+    try {
+      const res = await UpdateMangagedWarehouseAPI(body);
+      if (res?.status === 200) {
+        getUnMangagedWarehouse();
+        setError1(res?.data);
+      }
+    } catch (error) {
+      setError1(error?.response.data);
     }
+
   };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - listProduct.length) : 0;
@@ -196,10 +203,10 @@ export default function Territory() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Cập Nhật Nhà Kho Quản Lý
+            Thêm Nhà Kho Quản Lý
           </Typography>
         </Stack>
-
+        <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography>
         <Card>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -239,7 +246,7 @@ export default function Territory() {
                         <TableCell align="left">{address}</TableCell>
 
                         <TableCell align="left">
-                          <Button onClick={() => UpdateMangagedWarehouse(warehouseID)}>Thêm</Button>
+                          <Button onClick={() => UpdateMangagedWarehouse(warehouseID)}>Chọn</Button>
                         </TableCell>
                       </TableRow>
                     );

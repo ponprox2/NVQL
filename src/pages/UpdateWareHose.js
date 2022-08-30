@@ -43,9 +43,9 @@ import {
 
 const TABLE_HEAD = [
   { id: 'warehouseID ', label: 'Mã nhà kho ', alignRight: false },
-  { id: 'name ', label: 'tên nhà kho', alignRight: false },
-  { id: 'address ', label: 'địa chỉ', alignRight: false },
-  { id: 'shopAddress', label: 'Địa bàn quản lý', alignRight: false },
+  { id: 'name ', label: 'Tên nhà kho', alignRight: false },
+  { id: 'address ', label: 'Địa chỉ', alignRight: false },
+  { id: 'shopAddress', label: 'Khu vực quản lý', alignRight: false },
   { id: 'manageStatus ', label: 'Trạng thái quản lý', alignRight: false },
 ];
 // const { shopOrderID, shopName, shopkeeperName, shopAddress, shopPhone, registerDate } = row;
@@ -106,6 +106,7 @@ export default function UpdateWareHose() {
   const [regionsChoose, setRegionsChoose] = useState(0);
   const [open, setOpen] = useState(false);
   const [itemProp, setItemProp] = useState({});
+  const [error1, setError1] = useState('');
 
   async function getWorkingTerritoryAPI(id) {
     const res = await getWorkingTerritory(id);
@@ -127,9 +128,13 @@ export default function UpdateWareHose() {
       manageStatus: e?.manageStatus,
     }));
 
-    const res = await updateUnMangagedWarehouseAPI(body);
-    if (res?.status === 200) {
-      console.log(res?.data);
+    try {
+      const res = await updateUnMangagedWarehouseAPI(body);
+      if (res?.status === 200) {
+        setError1(res?.data);
+      }
+    } catch (error) {
+      setError1(error?.response.data);
     }
   };
 
@@ -235,6 +240,7 @@ export default function UpdateWareHose() {
           </Button>
         </Stack>
 
+        <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography>
         <Card>
           {/* <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
 
@@ -291,8 +297,8 @@ export default function UpdateWareHose() {
                             value={manageStatus}
                             onChange={(e) => handleChangeStatus(e?.target?.value, warehouseID)}
                           >
-                            <MenuItem value={0}>Chưa xác nhận</MenuItem>
-                            <MenuItem value={1}>Đã xác nhận</MenuItem>
+                            <MenuItem value={0}>Đang quản lý</MenuItem>
+                            <MenuItem value={1}>Ngưng quản lý</MenuItem>
                           </Select>
                         </FormControl>
                       </TableRow>

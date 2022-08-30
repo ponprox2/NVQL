@@ -93,11 +93,11 @@ export default function RegisterForm() {
     try {
       const res = await registerAPI(body);
       if (res?.status === 200) {
-        setError1(res?.response?.data);
+        setError1(res?.data);
         navigate('/login');
       }
     } catch (error) {
-      setError1(error);
+      setError1(error?.response.data);
     }
   };
 
@@ -240,7 +240,7 @@ export default function RegisterForm() {
               }}
             />
           </Stack> */}
-          <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography>
+              <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography>
           <Button fullWidth size="large" variant="contained" onClick={handleClick}>
             Register
           </Button>
