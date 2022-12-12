@@ -34,6 +34,7 @@ import { getDetailPackageAPI, getShopOrderHistoryAPI } from '../services/index';
 const TABLE_HEAD = [
   { id: 'STT', label: 'STT', alignRight: false },
   { id: 'time', label: 'Thời gian', alignRight: false },
+  { id: 'staffType', label: 'Loại nhân viên', alignRight: false },
   { id: 'staffName', label: 'Tên nhân viên', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
 ];
@@ -135,8 +136,9 @@ function DetailOrder() {
 
                   <TableCell align="left">{index+1}</TableCell>
                   <TableCell align="left">{value?.time}</TableCell>
+                  <TableCell align="left">{value?.staffType}</TableCell>
                   <TableCell align="left">{value?.staffName ? value?.staffName : 'Cửa hàng'}</TableCell>
-                  <TableCell align="left">{value?.status}</TableCell>
+                  <TableCell align="left"><strong>{value?.status}</strong> </TableCell>
                 </TableRow>
               ))}
             </TableBody>

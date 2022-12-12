@@ -21,6 +21,9 @@ import {
   API_UPDATE_UN_MANGAGED_WAREHOUSES,
   API_GET_UN_MANGAGED_WAREHOUSES,
   API_UPDATE_MANGAGED_WAREHOUSE,
+  API_GET_STAFF_INFO,
+  API_GET_SHOPS,
+  API_BAN_SHOP,
 } from './config';
 
 export const getWorkingTerritory = async (id) => {
@@ -44,7 +47,7 @@ export const getManagedWarehouseAPI = async (id) => {
 export const getWareHouseReportAPI = async (body) => {
   try {
     const response = await axios.get(
-      `${API_GET_WAREHOUSE_REPORT}?warehouseID=${body?.warehouseID}&fromDate=${body?.fromDate}&toDate=${body?.toDate}&monthlyReport=${body?.monthlyReport}`
+      `${API_GET_WAREHOUSE_REPORT}?deliveryTerritoryID=${body?.deliveryTerritoryID}&fromDate=${body?.fromDate}&toDate=${body?.toDate}&monthlyReport=${body?.monthlyReport}`
     );
     return response;
   } catch (error) {
@@ -131,7 +134,7 @@ export const loginAPI = async (body) => {
 export const getShopOrderManagedAPI = async (body) => {
   try {
     const response = await axios.get(
-      `${API_SHOP_ORDER_MANAGED}?managerID=${body?.managerID}&shopID=${body.shopId}&territoryID=${body?.territoryID}&regionID=${body?.regionID}&statusID=${body.statusID}`
+      `${API_SHOP_ORDER_MANAGED}?managerID=${body?.managerID}&shopID=${body.shopId}&territoryID=${body?.territoryID}&regionID=${body?.regionID}&statusID=${body.statusID}&shopOrderID=${body?.shopOrderID}`
     );
     return response;
   } catch (error) {
@@ -203,4 +206,33 @@ export const getTerritoryAPI = async () => {
   } catch (error) {
     return error?.response?.data || error;
   }
+};
+
+
+export const staffInfoAPI = async (body) => {
+  const response = await axios.get(
+    `${API_GET_STAFF_INFO}?staffID=${body?.staffID}`
+  );
+  return response;
+};
+
+export const getShopsAPI = async (body) => {
+  const response = await axios.get(
+    `${API_GET_SHOPS}?shopName=${body?.shopName}`
+  );
+  return response;
+};
+
+export const banShopAPI = async (body) => {
+
+
+  console.log('body');
+  console.log(body);
+  const response = await axios.post(API_BAN_SHOP, body, {
+    headers: {
+      // Overwrite Axios's automatically set Content-Type
+      'Content-Type': 'application/json'
+    }
+  });
+  return response;
 };

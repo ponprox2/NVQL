@@ -34,7 +34,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
 import DateRangePicker from './chooseTimeRangePicker';
-import { getWareHouseReportAPI, getManagedWarehouseAPI } from '../services/index';
+import { getWareHouseReportAPI, getTeritoryManagedAPI } from '../services/index';
 
 // ----------------------------------------------------------------------
 
@@ -94,8 +94,8 @@ export default function User() {
   const [openRangePicker, setOpenRangePicker] = useState(false);
   const [timeChoose, setTimeChoose] = useState('');
   const [endTimeChoose, setEndTimeChoose] = useState('');
-  const [shopnameChoose, setShopnameChoose] = useState('');
-  const [shopname1, setShopname1] = useState([]);
+  const [deliveryTerritoryID, setdeliveryTerritoryID] = useState('');
+  const [territory, setTerritory] = useState([]);
   const [buttonChoose, setButtonChoose] = useState('');
 
   const [listProduct, setListProduct] = useState([]);
@@ -122,13 +122,13 @@ export default function User() {
     }
 
     const body = {
-      warehouseID: shopnameChoose,
+      deliveryTerritoryID,
       fromDate: timeEnd2,
       toDate: timeEnd1,
       monthlyReport: buttonChoose,
     };
     getWareHouseReport(body);
-  }, [endTimeChoose, timeChoose, shopnameChoose, buttonChoose]);
+  }, [endTimeChoose, timeChoose, deliveryTerritoryID, buttonChoose]);
   useEffect(() => {
     getManagedWarehouse(staffId);
   }, []);
@@ -145,9 +145,9 @@ export default function User() {
   };
   const getManagedWarehouse = async (id) => {
     try {
-      const res = await getManagedWarehouseAPI(id);
+      const res = await getTeritoryManagedAPI(id);
       console.log(res);
-      setShopname1(res?.data);
+      setTerritory(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -169,7 +169,7 @@ export default function User() {
   };
 
   const renderAddress = (id) => {
-    const res = shopname1?.filter((e) => e?.warehouseID === id);
+    const res = territory?.filter((e) => e?.warehouseID === id);
     return res?.[0]?.address;
   };
 
@@ -208,11 +208,11 @@ export default function User() {
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="Product">
+    <Page title="Thống Kê Kết Quả Giao Hàng">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-          Thống Kê Kho
+          Thống Kê Kết Quả Giao Hàng
           </Typography>
           {/* <Button
             variant="contained"
@@ -225,25 +225,25 @@ export default function User() {
         </Stack>
         <Box style={{ marginBottom: '30px' }}>
           <Box style={{ display: 'flex' }}>
-            <Box>Nhà kho</Box>
-            <FormControl style={{ marginTop: '-5px', marginLeft: '125px' }}>
+            <Box>Khu vực giao hàng</Box>
+            <FormControl style={{ marginTop: '-5px', marginLeft: '50px' }}>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 style={{ height: '30px' }}
-                value={shopnameChoose}
-                onChange={(e) => setShopnameChoose(e?.target?.value)}
+                value={deliveryTerritoryID}
+                onChange={(e) => setdeliveryTerritoryID(e?.target?.value)}
               >
-                {shopname1?.map((e) => (
-                  <MenuItem value={e?.warehouseID}>{e?.name}</MenuItem>
+                {territory?.map((e) => (
+                  <MenuItem value={e?.territoryID}>{e?.description}</MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Box>
-          <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
+          {/* <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
             <Box>Địa chỉ kho</Box>
-            <Box style={{ marginLeft: '105px' }}>{renderAddress(shopnameChoose)}</Box>
-          </Box>
+            <Box style={{ marginLeft: '105px' }}>{renderAddress(deliveryTerritoryID)}</Box>
+          </Box> */}
 
           <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
             <Box >Thời gian thống kê</Box>

@@ -12,15 +12,21 @@ const navConfig = [
   //   icon: getIcon('eva:pie-chart-2-fill'),
   // },
   {
-    title: 'Quản Lý Danh Sách Đơn Hàng',
-    path: '/dashboard/user',
+    title: 'Quản Lý Cửa Hàng',
+    path: '/dashboard/shopManagement',
+  },
+  {
+    title: 'Quản Lý Đơn Hàng',
+    path: '/dashboard/shopOrdersManagement',
     // icon: getIcon('eva:people-fill'),
   },
   {
-    title: 'Thống Kê Kho',
-    path: '/dashboard/products',
+    title: 'Thống Kê Kết Quả Giao Hàng',
+    path: '/dashboard/resultReport',
     // icon: getIcon('eva:shopping-bag-fill'),
   },
+
+
   // {
   //   title: 'Order',
   //   path: '/dashboard/order',
@@ -31,16 +37,17 @@ const navConfig = [
   //   path: '/dashboard/blog',
   //   icon: getIcon('eva:file-text-fill'),
   // },
-  {
-    title: 'Cập Nhật Nhà Kho Quản Lý',
-    path: '/dashboard/updateWareHose',
-    //  icon: getIcon('eva:file-text-fill'),
-  },
-  {
-    title: 'logout',
-    path: '/login',
-    // icon: getIcon('eva:lock-fill'),
-  },
+  // // Delete chức năng dưới đây
+  // {
+  //   title: 'Cập Nhật Nhà Kho Quản Lý',
+  //   path: '/dashboard/updateWareHose',
+  //   //  icon: getIcon('eva:file-text-fill'),
+  // },
+  // {
+  //   title: 'logout',
+  //   path: '/login',
+  //   // icon: getIcon('eva:lock-fill'),
+  // },
   // {
   //   title: 'register',
   //   path: '/dashboard/register',

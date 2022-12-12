@@ -17,6 +17,8 @@ import UpdateWareHose from './pages/UpdateWareHose';
 import Territory from './pages/Territory';
 import Regions from './pages/Regions';
 import AddWarehouse from './pages/AddWarehouse';
+import StaffInfo from './pages/StaffInfo';
+import ShopManagement from './pages/ShopManagement';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -26,8 +28,8 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'shopOrdersManagement', element: <User /> },
+        { path: 'resultReport', element: <Products /> },
         { path: 'order', element: <Blog /> },
         // { path: 'login', element: <Login /> },
         { path: 'addProduct', element: <AddProduct /> },
@@ -39,13 +41,15 @@ export default function Router() {
         { path: 'territory/', element: <Territory /> },
         { path: 'regions/', element: <Regions /> },
         { path: 'addWarehouse/', element: <AddWarehouse /> },
+        { path: 'staffInfo/', element: <StaffInfo /> },
+        { path: 'shopManagement/', element: <ShopManagement /> },
       ],
     },
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
+        { path: '/', element: <Navigate to="/dashboard/shopManagement" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },

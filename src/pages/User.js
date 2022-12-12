@@ -118,6 +118,7 @@ export default function User() {
   const [listOrder, setListOrder] = useState([]);
 
   const [listUser, setListUser] = useState([]);
+  const [orderID, setOrderID] = useState('');
 
   async function getRegionAPI(id) {
     const res = await getRegion(id);
@@ -161,7 +162,8 @@ export default function User() {
       shopId: shopnameChoose,
       territoryID: territoriesManagementChoose,
       regionID: regionsChoose,
-      statusID: statusAllChoose,
+      statusID: packetStatusChoose,
+      shopOrderID: orderID,
     };
     const res = await getShopOrderManagedAPI(body);
     if (res?.status === 200) {
@@ -170,7 +172,7 @@ export default function User() {
   }
   useEffect(() => {
     getShopOrdersConfirmingAPI();
-  }, [statusAllChoose, regionsChoose, shopnameChoose, territoriesManagementChoose]);
+  }, [packetStatusChoose, regionsChoose, shopnameChoose, territoriesManagementChoose,orderID]);
 
   useEffect(() => {
     getPacketStatus();
@@ -255,7 +257,7 @@ export default function User() {
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User">
+    <Page title="Quản Lý Danh Sách Đơn Hàng">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -287,6 +289,18 @@ export default function User() {
                 ))}
               </Select>
             </FormControl>
+            <Box style={{ marginTop: '10px', marginLeft: '90px' }}>Mã đơn hàng</Box>
+            <input
+              style={{
+                width: '120px',
+                height: '25px',
+                marginLeft: '85px',
+                borderRadius: '25px',
+                padding: '5px',
+              }}
+              value={orderID}
+              onChange={(e) => setOrderID(e.target.value)}
+            />
           </Box>
           <Box style={{ display: 'flex', alignItems: 'center', height: '50px' }}>
             <Box style={{ marginTop: '10px'}}>Khu vực giao hàng</Box>
@@ -306,7 +320,7 @@ export default function User() {
                 ))}
               </Select>
             </FormControl>
-            <Box style={{ marginTop: '10px', marginLeft: '40px' }}>Phường/xã giao hàng</Box>
+            <Box style={{ marginTop: '10px', marginLeft: '90px' }}>Phường/xã giao hàng</Box>
             <FormControl style={{ marginTop: '10px', marginLeft: '35px' }}>
               <Select
                 labelId="demo-simple-select-label"

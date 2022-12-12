@@ -5,6 +5,7 @@ import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // mock
+import {staffInfoAPI} from '../../services/index';
 import account from '../../_mock/account';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
@@ -43,7 +44,6 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [adminInfo, setAdminInfo] = useState({});
   const isDesktop = useResponsive('up', 'lg');
   const [iss, setIss] = useState(false);
   useEffect(() => {
@@ -52,6 +52,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     }
   }, [pathname]);
 
+
+  const account = JSON.parse(localStorage.getItem("accountData") || "[]");
   // useEffect(() => {
   //   const temp = JSON.parse(localStorage.getItem('adminInfo'));
   //   if (temp) {
@@ -77,10 +79,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {adminInfo.username}
+              {account.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {adminInfo.role}
+                Nhân viên quản lý
               </Typography>
             </Box>
           </AccountStyle>

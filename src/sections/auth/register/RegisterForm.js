@@ -31,6 +31,7 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import { registerAPI } from '../../../services/index';
+import DialogApp from '../../../pages/Dialog';
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +56,9 @@ export default function RegisterForm() {
   });
   const [statusAll, setStatusAll] = useState(0);
   const [error1, setError1] = useState('');
+  const [reCall, setReCall] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
+  const [severity, setSeverity] = useState('');
 
   const handleChangeData = (e) => {
     const { name, value } = e.target;
@@ -97,7 +101,9 @@ export default function RegisterForm() {
         navigate('/login');
       }
     } catch (error) {
-      setError1(error?.response.data);
+      setOpenToast(true);
+      setSeverity('error');
+      setError1(error?.response?.data);
     }
   };
 
@@ -240,12 +246,21 @@ export default function RegisterForm() {
               }}
             />
           </Stack> */}
-              <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography>
+              {/* <Typography sx={{ color: 'red', marginBottom: '20px', fontSize: '20px' }}>{error1}</Typography> */}
           <Button fullWidth size="large" variant="contained" onClick={handleClick}>
             Register
           </Button>
         </Stack>
       </Form>
+      <DialogApp
+        content={error1}
+        type={0}
+        isOpen={openToast}
+        severity={severity}
+        callback={() => {
+          setOpenToast(false);
+        }}
+      />
     </FormikProvider>
   );
 }

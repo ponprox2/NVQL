@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.1.3:8180';
+const BASE_URL = 'http://192.168.1.8:8180';
 
 export const API_GET_FREE_SHIPPER = `${BASE_URL}/api/freeShippers`;
 
@@ -40,3 +40,8 @@ export const API_UPDATE_MANGAGED_WAREHOUSE = `${BASE_URL}/api/managedWarehouse`;
 
 export const API_UPDATE_UN_MANGAGED_WAREHOUSES = `${BASE_URL}/api/unmanagedWarehouses`;
 export const API_GET_UN_MANGAGED_WAREHOUSES = `${BASE_URL}/api/unmanagedWarehouses`;
+
+export const API_GET_STAFF_INFO = `${BASE_URL}/api/staffInfo`;
+
+export const API_GET_SHOPS = `${BASE_URL}/api/shops`;
+export const API_BAN_SHOP = `${BASE_URL}/api/banShop`;
